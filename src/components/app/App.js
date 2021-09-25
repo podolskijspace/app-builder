@@ -4,13 +4,25 @@ import Rectangle from '../rectangle/Rectangle';
 
 
 function App() {
-
-  const rects = [...Array(5)].map((_, i) => ({
-    id: (i+1).toString(),
-    x: i * 100,
-    y: 0,
-  }));
+  const initialRectangles = [
+    {
+      id: '0',
+      x: 100,
+      y: 0,
+    },
+    {
+      id: '1',
+      x: 200,
+      y: 0,
+    },
+    {
+      id: '2',
+      x: 300,
+      y: 0,
+    },
+  ]
   
+  const [rects, setRectangles] = useState(initialRectangles);
   const [selectedId, changeSelected] = useState(["2", "5"]);
 
   const checkMissClick = (e) => { //Проверка, если клик по пустому месту
@@ -28,12 +40,18 @@ function App() {
     >
       <Layer >
         {
-          rects.map(rect => {
+          rects.map((rect, i) => {
             return <Rectangle 
               x={rect.x}
               y={rect.y}
               key={rect.id}
+              shapeProps={rect}
               id={rect.id}
+              onChange={(newAttrs) => {
+                const rectangles = rects.slice();
+                rects[i] = newAttrs;
+                setRectangles(rectangles);
+              }}
               onSelect={(e) => {
                 if (e.evt.shiftKey) { //Проверка, что зажата кнопка шифт
                   const key = selectedId.indexOf(rect.id);
