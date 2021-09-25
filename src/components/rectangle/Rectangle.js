@@ -2,8 +2,8 @@ import React from 'react';
 import {Rect} from 'react-konva';
 
 const Rectangle = ({x, y, onSelect, isSelect, id}) => {
-  // console.log(+isSelect, +id);
-  isSelect = +isSelect === +id;
+  // console.log(isSelect);
+  isSelect = !!~isSelect.indexOf(id);
   return (
     <Rect 
       width={100}
