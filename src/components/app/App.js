@@ -42,8 +42,12 @@ function App() {
                   } else {
                     changeSelected([...selectedId.slice(0,key), ...selectedId.slice(key + 1)]);//Если повторяется, то убираем
                   }
-                } else {                    
-                  changeSelected([...rect.id])
+                } else {
+                  if (selectedId.length === 1 && selectedId[0] === rect.id) {
+                    changeSelected([])
+                  } else {
+                    changeSelected([...rect.id])
+                  }
                 }
               }}
               isSelect={selectedId}
