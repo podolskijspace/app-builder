@@ -11,7 +11,7 @@ function App() {
     y: 0,
   }));
   
-  const [selectedId, changeSelected] = useState(["2", "1"]);
+  const [selectedId, changeSelected] = useState(["2", "5"]);
 
   const checkMissClick = (e) => { //Проверка, если клик по пустому месту
     if (e.target === e.target.getStage()) {
@@ -40,7 +40,7 @@ function App() {
                   if(!~key) { //Проверка, что этот индекс не повторяется
                     changeSelected([...selectedId,...rect.id])
                   } else {
-                    changeSelected([...selectedId.slice(0,key), ...selectedId.slice(key + 1)]);
+                    changeSelected([...selectedId.slice(0,key), ...selectedId.slice(key + 1)]);//Если повторяется, то убираем
                   }
                 } else {                    
                   changeSelected([...rect.id])
