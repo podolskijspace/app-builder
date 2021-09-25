@@ -6,21 +6,29 @@ import Rectangle from '../rectangle/Rectangle';
 function App() {
 
   const rects = [...Array(5)].map((_, i) => ({
-    id: i.toString(),
+    id: (i+1).toString(),
     x: i * 100,
     y: 0,
   }));
   
-  const [selectedId, selectShape] = useState(0);
+  const [selectedId, changeSelected] = useState(3);
 
   const handleSelect = (id) => {
-    selectShape(id)
+    changeSelected(id)
+  }
+
+  const checkMissClick = (e) => {
+    if (e.target === e.target.getStage()) {
+      changeSelected(null);
+    }
   }
 
     return (
       <Stage 
       width={500} 
       height={200}
+      onMouseDown={checkMissClick}
+      onTouchStart={checkMissClick}
       >
         <Layer >
           {
@@ -30,7 +38,7 @@ function App() {
                 y={rect.y}
                 key={rect.id}
                 id={rect.id}
-                onSelect={() => selectShape(rect.id)}
+                onSelect={() => changeSelected(rect.id)}
                 isSelect={selectedId}
               />
             })
