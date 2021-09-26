@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {Layer, Stage} from 'react-konva';
 import Rectangle from '../rectangle/Rectangle';
+import { connect } from 'react-redux';
+import {addNewElem} from '../../redux/actions';
+
 
 const initialRectangles = [
   {
@@ -39,44 +42,45 @@ const initialRectangles = [
     x: 310,
     y: 20,
   },
-]
+];
 
-function App() {
+
+function App({addNewElem}) {
   
   const [rects, setRectangles] = React.useState(initialRectangles);
   const [selectedId, changeSelected] = useState(["1", "3"]);
 
-  useEffect(() => {
-    const onKeypress = e => {
-      const newArr = [];
+  // useEffect(() => {
+  //   const onKeypress = e => {
+  //     const newArr = [];
 
-      const pushElem = (attr) => {
-        newArr[newArr.length] = {...attr}
+  //     const pushElem = (attr) => {
+  //       newArr[newArr.length] = {...attr}
         
-        newArr[newArr.length - 1].y += 100;
-        newArr[newArr.length - 1].id = rects.length;
+  //       newArr[newArr.length - 1].y += 100;
+  //       newArr[newArr.length - 1].id = rects.length;
         
-      }
+  //     }
 
-      if (e.key === 'Tab' && e.ctrlKey) {
-        rects.forEach((rect, id) => {
-          if (!!~selectedId.indexOf(id + '')) {
-            pushElem(rect);
-          }
-        })
+  //     if (e.key === 'Tab' && e.ctrlKey) {
+  //       rects.forEach((rect, id) => {
+  //         if (!!~selectedId.indexOf(id + '')) {
+  //           pushElem(rect);
+  //         }
+  //       })
 
-        const rectangles = [...rects, ...newArr];
+  //       const rectangles = [...rects, ...newArr];
 
-        setRectangles(rectangles);
-      }
-    }
+  //       setRectangles(rectangles);
+  //     }
+  //   }
   
-    document.addEventListener('keypress', onKeypress);
+  //   document.addEventListener('keypress', onKeypress);
   
-    return () => {
-      document.removeEventListener('keypress', onKeypress);
-    };
-  }, [selectedId]);
+  //   return () => {
+  //     document.removeEventListener('keypress', onKeypress);
+  //   };
+  // }, [selectedId]);
 
   const checkMissClick = (e) => { //Проверка, если клик по пустому месту
     if (e.target === e.target.getStage()) {
@@ -131,4 +135,14 @@ function App() {
   );
 }
 
-export default App;
+const mstp =(state) => {
+  return {
+    rects: state.rects
+  }
+}
+
+const mdtp = {
+  addNewElem,
+}
+
+export default connect(mstp, mdtp)(App);
