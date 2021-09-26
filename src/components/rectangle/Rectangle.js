@@ -13,7 +13,7 @@ const Rectangle = ({shapeProps, onSelect, isSelect, id, onChange}) => {
       trRef.current.nodes([shapeRef.current]);
       trRef.current.getLayer().batchDraw();
     }
-  }, isSelect);
+  }, [isSelect]);
 
 
   return (
