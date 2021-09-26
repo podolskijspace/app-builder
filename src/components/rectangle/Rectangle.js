@@ -47,39 +47,36 @@ const Rectangle = ({shapeProps, onSelect, isSelect, id, onChange}) => {
         }}
       />
       {isSelect && (
-        <Transformer
-          ref={trRef}
-          boundBoxFunc={(oldBox, newBox) => {
-            // limit resize
-            if (newBox.width < 5 || newBox.height < 5) {
-              return oldBox;
-            }
-            return newBox;
-          }}
-        />
+        <>
+          <Transformer
+            ref={trRef}
+            boundBoxFunc={(oldBox, newBox) => {
+              // limit resize
+              if (newBox.width < 5 || newBox.height < 5) {
+                return oldBox;
+              }
+              return newBox;
+            }}
+          />
+          <Rect 
+            width={85}
+            height={22}
+            x={3 + shapeProps.x}
+            y={3 + shapeProps.y}
+            fill='red'
+          />
+          <Text 
+            text={`width: ${Math.round(shapeProps.width)}`}
+            x={4 + shapeProps.x}
+            y={4 + shapeProps.y}
+          />
+          <Text 
+            text={`height: ${Math.round(shapeProps.height)}`}
+            x={4 + shapeProps.x}
+            y={4 + shapeProps.y + 10}
+          />
+        </>
       )}
-      <Rect 
-        width={85}
-        height={30}
-        x={shapeProps.x}
-        y={shapeProps.y}
-        fill='red'
-      />
-      <Text 
-        text={`width: ${Math.round(shapeProps.width)}`}
-        x={shapeProps.x}
-        y={shapeProps.y}
-      />
-      <Text 
-        text={`height: ${Math.round(shapeProps.height)}`}
-        x={shapeProps.x}
-        y={shapeProps.y + 10}
-      />
-      <Text 
-        text={`inSelected: ${isSelect ? 'yes' : 'no'}`}
-        x={shapeProps.x}
-        y={shapeProps.y + 20}
-      />
     </>
   )
 }
