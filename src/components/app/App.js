@@ -7,23 +7,39 @@ function App() {
   const rects = [
     {
       id: '0',
-      x: 0,
-      y: 0,
+      width: 100,
+      height: 100,
+      stroke:"blue",
+      strokeWidth:1,
+      x: 10,
+      y: 20,
     },
     {
       id: '1',
-      x: 100,
-      y: 0,
+      width: 100,
+      height: 100,
+      stroke:"blue",
+      strokeWidth:1,
+      x: 110,
+      y: 20,
     },
     {
       id: '2',
-      x: 200,
-      y: 0,
+      width: 100,
+      height: 100,
+      stroke:"blue",
+      strokeWidth:1,
+      x: 210,
+      y: 20,
     },
     {
       id: '3',
-      x: 300,
-      y: 0,
+      width: 100,
+      height: 100,
+      stroke:"blue",
+      strokeWidth:1,
+      x: 310,
+      y: 20,
     },
   ]
   
@@ -46,10 +62,9 @@ function App() {
         {
           rects.map((rect, i) => {
             return <Rectangle 
-              x={rect.x}
-              y={rect.y}
-              key={rect.id}
+              shapeProps = {rect}
               id={rect.id}
+              key={rect.id}
               onSelect={(e) => {
                 if (e.evt.shiftKey) { //Проверка, что зажата кнопка шифт
                   const key = selectedId.indexOf(rect.id);
