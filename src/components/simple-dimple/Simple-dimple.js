@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import { Stage, Layer, Rect, Transformer } from 'react-konva';
 
 const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
@@ -76,19 +75,11 @@ const initialRectangles = [
     fill: 'red',
     id: 'rect1',
   },
-  {
-    x: 150,
-    y: 150,
-    width: 100,
-    height: 100,
-    fill: 'green',
-    id: 'rect2',
-  },
 ];
 
 const App = () => {
   const [rectangles, setRectangles] = React.useState(initialRectangles);
-  const [selectedId, selectShape] = React.useState(null);
+  const [selectedId, selectShape] = React.useState('rect1');
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
@@ -128,4 +119,4 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById('root'));
+export default App;

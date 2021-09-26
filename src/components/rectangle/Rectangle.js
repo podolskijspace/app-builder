@@ -1,19 +1,8 @@
-import React, {useEffect} from 'react';
-import {Rect, Text, Transformer} from 'react-konva';
+import React from 'react';
+import {Rect, Text} from 'react-konva';
 
-const Rectangle = ({x, y, onSelect, isSelect, id, onChange, shapeProps}) => {
+const Rectangle = ({x, y, onSelect, isSelect, id}) => {
   isSelect = !!~isSelect.indexOf(id);
-
-  const shapeRef = React.useRef();
-  const trRef = React.useRef();
-
-  useEffect(() => {
-    if (isSelect) {
-      // we need to attach transformer manually
-      trRef.current.nodes([shapeRef.current]);
-      trRef.current.getLayer().batchDraw();
-    }
-  }, [isSelect]);
 
   return (
     <>
@@ -25,44 +14,10 @@ const Rectangle = ({x, y, onSelect, isSelect, id, onChange, shapeProps}) => {
         fill={isSelect ? 'green':'black'}
         stroke="blue"
         strokeWidth={1}
-        {...shapeProps}
         onClick={onSelect}
         onTap={onSelect}
-        onTransformEnd={(e) => {
-          // transformer is changing scale of the node
-          // and NOT its width or height
-          // but in the store we have only width and height
-          // to match the data better we will reset scale on transform end
-          const node = shapeRef.current;
-          const scaleX = node.scaleX();
-          const scaleY = node.scaleY();
-
-          // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
-          onChange({
-            ...shapeProps,
-            x: node.x(),
-            y: node.y(),
-            // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
-          });
-        }}
       />
-      {isSelect && (
-        <Transformer
-          ref={trRef}
-          boundBoxFunc={(oldBox, newBox) => {
-            // limit resize
-            if (newBox.width < 5 || newBox.height < 5) {
-              return oldBox;
-            }
-            return newBox;
-          }}
-        />
-      )}
-      {/* <Rect 
+      <Rect 
         width={85}
         height={30}
         x={x}
@@ -83,7 +38,7 @@ const Rectangle = ({x, y, onSelect, isSelect, id, onChange, shapeProps}) => {
         text={`inSelected: ${isSelect ? 'yes' : 'no'}`}
         x={x}
         y={y + 20}
-      /> */}
+      />
     </>
   )
 }

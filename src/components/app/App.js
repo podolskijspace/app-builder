@@ -1,29 +1,33 @@
 import React, {useState} from 'react';
-import {Layer, Rect, Stage, Group, Text} from 'react-konva';
+import {Layer, Stage} from 'react-konva';
 import Rectangle from '../rectangle/Rectangle';
 
 
 function App() {
-  const initialRectangles = [
+  const rects = [
     {
       id: '0',
-      x: 100,
+      x: 0,
       y: 0,
     },
     {
       id: '1',
-      x: 200,
+      x: 100,
       y: 0,
     },
     {
       id: '2',
+      x: 200,
+      y: 0,
+    },
+    {
+      id: '3',
       x: 300,
       y: 0,
     },
   ]
   
-  const [rects, setRectangles] = useState(initialRectangles);
-  const [selectedId, changeSelected] = useState(["2", "5"]);
+  const [selectedId, changeSelected] = useState(["1", "3"]);
 
   const checkMissClick = (e) => { //Проверка, если клик по пустому месту
     if (e.target === e.target.getStage()) {
@@ -45,13 +49,7 @@ function App() {
               x={rect.x}
               y={rect.y}
               key={rect.id}
-              shapeProps={rect}
               id={rect.id}
-              onChange={(newAttrs) => {
-                const rectangles = rects.slice();
-                rects[i] = newAttrs;
-                setRectangles(rectangles);
-              }}
               onSelect={(e) => {
                 if (e.evt.shiftKey) { //Проверка, что зажата кнопка шифт
                   const key = selectedId.indexOf(rect.id);
